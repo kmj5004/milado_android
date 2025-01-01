@@ -17,6 +17,7 @@ data class SignUpState(
     val code5: String = "",
     val code6: String = "",
     val name: String = "",
+    val dep: String = ""
 )
 
 class SignUpViewModel : ViewModel() {
@@ -34,7 +35,7 @@ class SignUpViewModel : ViewModel() {
     fun updateCode(code: String) {
         if (code.length < 2) _uiState.update { it.copy(code = code) }
         if (code.length == 6) {
-            PasteCode(code)
+            pasteCode(code)
         }
 
     }
@@ -42,36 +43,45 @@ class SignUpViewModel : ViewModel() {
     fun updateCode2(code: String) {
         if (code.length < 2) _uiState.update { it.copy(code2 = code) }
         if (code.length == 6) {
-            PasteCode(code)
+            pasteCode(code)
         }
     }
 
     fun updateCode3(code: String) {
         if (code.length < 2) _uiState.update { it.copy(code3 = code) }
         if (code.length == 6) {
-            PasteCode(code)
+            pasteCode(code)
         }
     }
 
     fun updateCode4(code: String) {
         if (code.length < 2) _uiState.update { it.copy(code4 = code) }
         if (code.length == 6) {
-            PasteCode(code)
+            pasteCode(code)
         }
     }
 
     fun updateCode5(code: String) {
         if (code.length < 2) _uiState.update { it.copy(code5 = code) }
         if (code.length == 6) {
-            PasteCode(code)
+            pasteCode(code)
         }
     }
 
     fun updateCode6(code: String) {
         if (code.length < 2) _uiState.update { it.copy(code6 = code) }
         if (code.length == 6) {
-            PasteCode(code)
+            pasteCode(code)
         }
+    }
+
+    fun updateClicked(content: Boolean) {
+        _uiState.update { it.copy(clicked = content) }
+        if (content == false) _uiState.update { it.copy(sec = 300) }
+    }
+
+    fun updateDep(dep: String) {
+        _uiState.update { it.copy(dep = dep) }
     }
 
     fun delSec(sec: Int) {
@@ -82,12 +92,7 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun updateClicked(content: Boolean) {
-        _uiState.update { it.copy(clicked = content) }
-        if (content == false) _uiState.update { it.copy(sec = 300) }
-    }
-
-    fun PasteCode(code: String) {
+    fun pasteCode(code: String) {
         _uiState.update {
             it.copy(
                 code = code[0].toString(),

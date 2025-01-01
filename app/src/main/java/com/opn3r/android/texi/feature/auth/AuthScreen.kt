@@ -6,7 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,8 +27,11 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,20 +40,17 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.opn3r.android.texi.R
-import com.opn3r.android.texi.ui.compnent.button.BasicButton
-import notoSanskr
 import com.google.accompanist.permissions.*
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import com.opn3r.android.texi.R
 import com.opn3r.android.texi.feature.navigation.NavGroup
+import com.opn3r.android.texi.ui.compnent.button.BasicButton
 import kotlinx.coroutines.launch
+import notoSanskr
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun AuthScreen(
@@ -72,7 +71,6 @@ fun AuthScreen(
         Manifest.permission.ACCESS_FINE_LOCATION
     )
 
-    var herefusesagain by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
@@ -83,6 +81,12 @@ fun AuthScreen(
     val coroutineScope = rememberCoroutineScope()
 
     val snackBarHost = remember { SnackbarHostState() }
+
+    LaunchedEffect(locationPermissionState.status) {
+        if (locationPermissionState.status.isGranted) {
+            navController.navigate(NavGroup.SIGNUP)
+        }
+    }
 
     Box(
         modifier = modifier
@@ -172,21 +176,11 @@ fun AuthScreen(
                 .padding(bottom = 15.dp),
             text = "시작하기",
             onClick = {
-                if (pass) {
-                    if (!locationPermissionState.status.isGranted) {
-                        locationPermissionState.launchPermissionRequest()
-                        Toast.makeText(context, "서비스를 이용하시기 위한 필수 권한 입니다", Toast.LENGTH_SHORT)
-                            .show()
-                        herefusesagain = true
-                    } else {
-                        navController.navigate(NavGroup.SIGNUP)
-                    }
-                    if (!locationPermissionState.status.isGranted && herefusesagain) {
-                        snackBar = true
-                    }
+                Log.d("권한", "AuthScreen: $pass")
+                if (locationPermissionState.status.isGranted) {
+                    navController.navigate(NavGroup.SIGNUP)
                 } else {
                     permissionsState.launchMultiplePermissionRequest()
-                    pass = true
                 }
             }
         )
@@ -250,10 +244,10 @@ fun Auth(
 }
 
 
-@Composable
-@Preview
-fun AuthPreview() {
-    AuthScreen(
-        navController = NavHostController(context = LocalContext.current)
-    )
-}
+//@Composable
+//@Preview
+//fun AuthPreview() {
+//    AuthScreen(
+//        navController = NavHostController(context = LocalContext.current)
+//    )
+//}

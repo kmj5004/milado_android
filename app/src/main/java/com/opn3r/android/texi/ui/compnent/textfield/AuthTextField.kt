@@ -1,6 +1,9 @@
 package com.opn3r.android.texi.ui.compnent.textfield
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,7 +29,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import notoSanskr
 import com.opn3r.android.texi.R
 
@@ -39,6 +42,13 @@ fun AuthTextField(
     sec: Int,
     readOnly: Boolean,
 ) {
+    val animatedColor by animateColorAsState(
+        targetValue = if (readOnly) Color.Gray else Color.Black,
+        animationSpec = tween(
+            durationMillis = 200,
+            easing = LinearOutSlowInEasing
+        )
+    )
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -51,7 +61,6 @@ fun AuthTextField(
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
             verticalAlignment = Alignment.CenterVertically
-
         ) {
             BasicTextField(
                 value = value,
@@ -77,7 +86,10 @@ fun AuthTextField(
                         innerTextField()
                     }
                 },
-                readOnly = readOnly
+                readOnly = readOnly,
+                textStyle = TextStyle(
+                    color = animatedColor
+                )
             )
             if (readOnly) {
                 Image(

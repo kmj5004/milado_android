@@ -62,6 +62,7 @@ fun SignUpScreen(
     val focusManager: FocusManager = LocalFocusManager.current
     var readOnly by remember { mutableIntStateOf(0) }
     var name by remember { mutableStateOf(false) }
+    var dep by remember { mutableStateOf(false) }
 
     LaunchedEffect(uiState.clicked) {
         if (uiState.clicked) {
@@ -70,6 +71,12 @@ fun SignUpScreen(
                 delay(1.seconds)
             }
             viewModel.updateClicked(false)
+        }
+    }
+
+    LaunchedEffect(readOnly) {
+        if (readOnly == 2) {
+            dep = true
         }
     }
 
@@ -121,6 +128,29 @@ fun SignUpScreen(
                 Spacer(Modifier.height(30.dp))
                 Column {
                     AnimatedVisibility(
+                        visible = dep,
+                        enter = slideInVertically(
+                            initialOffsetY = { fullHeight -> -fullHeight },
+                            animationSpec = tween(
+                                durationMillis = 500,        // 지속시간
+                                delayMillis = 100,          // 시작 전 대기시간
+                                easing = LinearOutSlowInEasing  // 가속도 곡선
+                            )
+                        ),
+                    ) {
+                        DeleteTextField(
+                            value = uiState.dep,
+                            onValueChange = { newValue -> viewModel.updateDep(newValue) },
+                            hint = "학번을 입력해 주세요",
+                            onClick = {
+                                viewModel.updateDep("")
+                            },
+                            readOnly = readOnly >= 2,
+                            modifier = modifier.zIndex(1F)
+                        )
+                    }
+                    Spacer(Modifier.height(10.dp))
+                    AnimatedVisibility(
                         visible = name,
                         enter = slideInVertically(
                             initialOffsetY = { fullHeight -> -fullHeight },
@@ -168,7 +198,7 @@ fun SignUpScreen(
                                 initialOffsetY = { fullHeight -> -fullHeight },
                                 animationSpec = tween(
                                     durationMillis = 300,
-                                    delayMillis = 50,
+                                    delayMillis = 30,
                                     easing = LinearOutSlowInEasing
                                 )
                             ),
@@ -184,6 +214,7 @@ fun SignUpScreen(
                                         focusManager.clearFocus()
                                     }
                                 },
+                                readOnly = readOnly >= 1,
                             )
                         }
                         AnimatedVisibility(
@@ -192,7 +223,7 @@ fun SignUpScreen(
                                 initialOffsetY = { fullHeight -> -fullHeight },
                                 animationSpec = tween(
                                     durationMillis = 300,
-                                    delayMillis = 80,
+                                    delayMillis = 40,
                                     easing = LinearOutSlowInEasing
                                 )
                             ),
@@ -208,6 +239,7 @@ fun SignUpScreen(
                                         focusManager.moveFocus(FocusDirection.Left)
                                     }
                                 },
+                                readOnly = readOnly >= 1,
                             )
                         }
                         AnimatedVisibility(
@@ -216,7 +248,7 @@ fun SignUpScreen(
                                 initialOffsetY = { fullHeight -> -fullHeight },
                                 animationSpec = tween(
                                     durationMillis = 300,
-                                    delayMillis = 120,
+                                    delayMillis = 50,
                                     easing = LinearOutSlowInEasing
                                 )
                             ),
@@ -232,6 +264,7 @@ fun SignUpScreen(
                                         focusManager.moveFocus(FocusDirection.Left)
                                     }
                                 },
+                                readOnly = readOnly >= 1,
                             )
                         }
                         AnimatedVisibility(
@@ -240,7 +273,7 @@ fun SignUpScreen(
                                 initialOffsetY = { fullHeight -> -fullHeight },
                                 animationSpec = tween(
                                     durationMillis = 300,
-                                    delayMillis = 150,
+                                    delayMillis = 60,
                                     easing = LinearOutSlowInEasing
                                 )
                             ),
@@ -256,6 +289,7 @@ fun SignUpScreen(
                                         focusManager.moveFocus(FocusDirection.Left)
                                     }
                                 },
+                                readOnly = readOnly >= 1,
                             )
 
                         }
@@ -265,7 +299,7 @@ fun SignUpScreen(
                                 initialOffsetY = { fullHeight -> -fullHeight },
                                 animationSpec = tween(
                                     durationMillis = 300,
-                                    delayMillis = 180,
+                                    delayMillis = 70,
                                     easing = LinearOutSlowInEasing
                                 )
                             ),
@@ -281,6 +315,7 @@ fun SignUpScreen(
                                         focusManager.moveFocus(FocusDirection.Left)
                                     }
                                 },
+                                readOnly = readOnly >= 1,
                             )
                         }
                         AnimatedVisibility(
@@ -289,7 +324,7 @@ fun SignUpScreen(
                                 initialOffsetY = { fullHeight -> -fullHeight },
                                 animationSpec = tween(
                                     durationMillis = 300,
-                                    delayMillis = 210,
+                                    delayMillis = 80,
                                     easing = LinearOutSlowInEasing
                                 )
                             ),
@@ -303,6 +338,7 @@ fun SignUpScreen(
                                         focusManager.moveFocus(FocusDirection.Left)
                                     }
                                 },
+                                readOnly = readOnly >= 1,
                             )
                         }
                     }
@@ -318,7 +354,6 @@ fun SignUpScreen(
         ) {
             readOnly += 1
             viewModel.updateClicked(false)
-            code = false
             name = true
         }
     }
