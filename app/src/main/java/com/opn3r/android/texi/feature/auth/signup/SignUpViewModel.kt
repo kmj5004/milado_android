@@ -17,7 +17,9 @@ data class SignUpState(
     val code5: String = "",
     val code6: String = "",
     val name: String = "",
-    val dep: String = ""
+    val dep: String = "",
+    val id: String = "",
+    val password: String = ""
 )
 
 class SignUpViewModel : ViewModel() {
@@ -82,6 +84,14 @@ class SignUpViewModel : ViewModel() {
 
     fun updateDep(dep: String) {
         _uiState.update { it.copy(dep = dep) }
+    }
+
+    fun updateId(id: String) {
+        _uiState.update { it.copy(id = id) }
+    }
+
+    fun updatePassword(password: String) {
+        _uiState.update { it.copy(password = password) }
     }
 
     fun delSec(sec: Int) {

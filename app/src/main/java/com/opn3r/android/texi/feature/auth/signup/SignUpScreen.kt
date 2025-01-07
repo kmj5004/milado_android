@@ -61,8 +61,6 @@ fun SignUpScreen(
     var code by remember { mutableStateOf(false) }
     val focusManager: FocusManager = LocalFocusManager.current
     var readOnly by remember { mutableIntStateOf(0) }
-    var name by remember { mutableStateOf(false) }
-    var dep by remember { mutableStateOf(false) }
 
     LaunchedEffect(uiState.clicked) {
         if (uiState.clicked) {
@@ -71,12 +69,6 @@ fun SignUpScreen(
                 delay(1.seconds)
             }
             viewModel.updateClicked(false)
-        }
-    }
-
-    LaunchedEffect(readOnly) {
-        if (readOnly == 2) {
-            dep = true
         }
     }
 
@@ -128,7 +120,53 @@ fun SignUpScreen(
                 Spacer(Modifier.height(30.dp))
                 Column {
                     AnimatedVisibility(
-                        visible = dep,
+                        visible = readOnly >= 4,
+                        enter = slideInVertically(
+                            initialOffsetY = { fullHeight -> -fullHeight },
+                            animationSpec = tween(
+                                durationMillis = 500,        // 지속시간
+                                delayMillis = 100,          // 시작 전 대기시간
+                                easing = LinearOutSlowInEasing  // 가속도 곡선
+                            )
+                        ),
+                    ) {
+                        DeleteTextField(
+                            value = uiState.password,
+                            onValueChange = { newValue -> viewModel.updatePassword(newValue) },
+                            hint = "비밀번호를 입력해 주세요",
+                            onClick = {
+                                viewModel.updatePassword("")
+                            },
+                            readOnly = readOnly >= 5,
+                            modifier = modifier.zIndex(1F)
+                        )
+                    }
+                    Spacer(Modifier.height(10.dp))
+                    AnimatedVisibility(
+                        visible = readOnly >= 3,
+                        enter = slideInVertically(
+                            initialOffsetY = { fullHeight -> -fullHeight },
+                            animationSpec = tween(
+                                durationMillis = 500,        // 지속시간
+                                delayMillis = 100,          // 시작 전 대기시간
+                                easing = LinearOutSlowInEasing  // 가속도 곡선
+                            )
+                        ),
+                    ) {
+                        DeleteTextField(
+                            value = uiState.id,
+                            onValueChange = { newValue -> viewModel.updateId(newValue) },
+                            hint = "아이디를 입력해 주세요",
+                            onClick = {
+                                viewModel.updateId("")
+                            },
+                            readOnly = readOnly >= 4,
+                            modifier = modifier.zIndex(1F)
+                        )
+                    }
+                    Spacer(Modifier.height(10.dp))
+                    AnimatedVisibility(
+                        visible = readOnly >= 2,
                         enter = slideInVertically(
                             initialOffsetY = { fullHeight -> -fullHeight },
                             animationSpec = tween(
@@ -145,13 +183,13 @@ fun SignUpScreen(
                             onClick = {
                                 viewModel.updateDep("")
                             },
-                            readOnly = readOnly >= 2,
+                            readOnly = readOnly >= 3,
                             modifier = modifier.zIndex(1F)
                         )
                     }
                     Spacer(Modifier.height(10.dp))
                     AnimatedVisibility(
-                        visible = name,
+                        visible = readOnly >= 1,
                         enter = slideInVertically(
                             initialOffsetY = { fullHeight -> -fullHeight },
                             animationSpec = tween(
@@ -354,7 +392,6 @@ fun SignUpScreen(
         ) {
             readOnly += 1
             viewModel.updateClicked(false)
-            name = true
         }
     }
 }
