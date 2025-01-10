@@ -112,7 +112,9 @@ fun PasswordTextField(
                 IconButton(
                     onClick = {
                         isHide = !isHide
-                    }
+                    },
+                    modifier = modifier
+                        .size(20.dp)
                 ) {
                     Icon(
                         painter = painterResource(id = if (isHide) R.drawable.ic_password_show else R.drawable.ic_password_hide),

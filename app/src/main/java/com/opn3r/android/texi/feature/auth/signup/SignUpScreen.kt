@@ -47,6 +47,7 @@ import com.opn3r.android.texi.ui.compnent.button.BasicButton
 import com.opn3r.android.texi.ui.compnent.textfield.AuthTextField
 import com.opn3r.android.texi.ui.compnent.textfield.CodeTextField
 import com.opn3r.android.texi.ui.compnent.textfield.DeleteTextField
+import com.opn3r.android.texi.ui.compnent.textfield.PasswordTextField
 import kotlinx.coroutines.delay
 import notoSanskr
 import kotlin.time.Duration.Companion.seconds
@@ -70,6 +71,10 @@ fun SignUpScreen(
             }
             viewModel.updateClicked(false)
         }
+    }
+
+    LaunchedEffect(readOnly) {
+
     }
 
     fun updateTel(tel: String) {
@@ -106,7 +111,7 @@ fun SignUpScreen(
                     )
                 )
             }
-            Spacer(Modifier.height(80.dp))
+            Spacer(Modifier.height(30.dp))
             Column {
                 Text(
                     text = "함께타는\n택시의\n첫걸음",
@@ -117,10 +122,10 @@ fun SignUpScreen(
                         color = Color(0xFF000000)
                     )
                 )
-                Spacer(Modifier.height(30.dp))
+                Spacer(Modifier.height(20.dp))
                 Column {
                     AnimatedVisibility(
-                        visible = readOnly >= 4,
+                        visible = readOnly >= 5,
                         enter = slideInVertically(
                             initialOffsetY = { fullHeight -> -fullHeight },
                             animationSpec = tween(
@@ -130,7 +135,7 @@ fun SignUpScreen(
                             )
                         ),
                     ) {
-                        DeleteTextField(
+                        PasswordTextField(
                             value = uiState.password,
                             onValueChange = { newValue -> viewModel.updatePassword(newValue) },
                             hint = "비밀번호를 입력해 주세요",
@@ -392,6 +397,7 @@ fun SignUpScreen(
         ) {
             readOnly += 1
             viewModel.updateClicked(false)
+            code = false
         }
     }
 }
