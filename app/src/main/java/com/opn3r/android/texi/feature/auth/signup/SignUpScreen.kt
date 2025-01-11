@@ -43,6 +43,7 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.opn3r.android.texi.R
+import com.opn3r.android.texi.feature.navigation.NavGroup
 import com.opn3r.android.texi.ui.compnent.button.BasicButton
 import com.opn3r.android.texi.ui.compnent.textfield.AuthTextField
 import com.opn3r.android.texi.ui.compnent.textfield.CodeTextField
@@ -74,7 +75,9 @@ fun SignUpScreen(
     }
 
     LaunchedEffect(readOnly) {
-
+        if (readOnly >= 5) {
+            navController.navigate(NavGroup.LOGIN)
+        }
     }
 
     fun updateTel(tel: String) {
@@ -125,7 +128,7 @@ fun SignUpScreen(
                 Spacer(Modifier.height(20.dp))
                 Column {
                     AnimatedVisibility(
-                        visible = readOnly >= 5,
+                        visible = readOnly >= 4,
                         enter = slideInVertically(
                             initialOffsetY = { fullHeight -> -fullHeight },
                             animationSpec = tween(

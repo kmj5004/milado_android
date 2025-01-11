@@ -6,4 +6,5 @@ object NavGroup {
     const val START = "start"
     const val AUTH = "auth"
     const val SIGNUP = "signup"
+    const val LOGIN = "login"
 }
