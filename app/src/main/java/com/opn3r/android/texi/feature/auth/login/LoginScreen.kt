@@ -2,6 +2,7 @@ package com.opn3r.android.texi.feature.auth.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,18 +16,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.opn3r.android.texi.R
+import com.opn3r.android.texi.ui.compnent.button.CircleButton
 import com.opn3r.android.texi.ui.compnent.textfield.DeleteTextField
 import com.opn3r.android.texi.ui.compnent.textfield.PasswordTextField
 import notoSanskr
@@ -99,6 +103,45 @@ fun LoginScreen(
                     },
                     readOnly = false
                 )
+                Spacer(Modifier.height(10.dp))
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    CircleButton(
+                        click = uiState.autoLogin
+                    ) {
+                        viewModel.updateAutoLogin(!uiState.autoLogin)
+                    }
+                    Spacer(Modifier.width(10.dp))
+                    Text(
+                        text = "자동 로그인",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            lineHeight = 40.sp,
+                            fontFamily = notoSanskr
+                        ),
+                        color = Color(0xFF000000),
+                        letterSpacing = 0.25.sp,
+                    )
+                    Spacer(Modifier.width(20.dp))
+                    CircleButton(
+                        click = uiState.saveId
+                    ) {
+                        viewModel.updateSaveId(!uiState.saveId)
+                    }
+                    Spacer(Modifier.width(10.dp))
+                    Text(
+                        text = "아이디 저장",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            lineHeight = 40.sp,
+                            fontFamily = notoSanskr,
+                            fontWeight = FontWeight(400),
+                            color = Color(0xFF000000),
+                            letterSpacing = 0.25.sp,
+                        )
+                    )
+                }
             }
         }
     }

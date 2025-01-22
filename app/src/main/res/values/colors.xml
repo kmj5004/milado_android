@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFFFCC01</color>
+    <color name="white_yellow">#FFFEE101</color>
+    <color name="m_line">#FFD9D9D9</color>
 </resources>
