@@ -1,5 +1,6 @@
 package com.opn3r.android.texi.feature.auth.login
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +46,8 @@ fun LoginScreen(
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
+
+    val error by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
@@ -100,8 +105,11 @@ fun LoginScreen(
                     hint = "비밀번호를 입력해 주세요",
                     onClick = {
                         viewModel.updateId("")
+                        error != error
+                        Log.d("error", "LoginScreen: $error")
                     },
-                    readOnly = false
+                    readOnly = false,
+                    error = error
                 )
                 Spacer(Modifier.height(10.dp))
                 Row(

@@ -10,4 +10,5 @@
     <color name="yellow">#FFFFCC01</color>
     <color name="white_yellow">#FFFEE101</color>
     <color name="m_line">#FFD9D9D9</color>
+    <color name="error_red">#FFFF3120</color>
 </resources>
