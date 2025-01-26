@@ -47,7 +47,6 @@ fun LoginScreen(
 
     val uiState by viewModel.uiState.collectAsState()
 
-    val error by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
@@ -96,6 +95,7 @@ fun LoginScreen(
                     onClick = {
                         viewModel.updateId("")
                     },
+                    error = uiState.error,
                     readOnly = false
                 )
                 Spacer(modifier = modifier.height(10.dp))
@@ -105,11 +105,11 @@ fun LoginScreen(
                     hint = "비밀번호를 입력해 주세요",
                     onClick = {
                         viewModel.updateId("")
-                        error != error
-                        Log.d("error", "LoginScreen: $error")
+                        viewModel.updateError(error = !uiState.error)
+                        Log.d("error", "LoginScreen: ${uiState.error}")
                     },
                     readOnly = false,
-                    error = error
+                    error = uiState.error
                 )
                 Spacer(Modifier.height(10.dp))
                 Row(

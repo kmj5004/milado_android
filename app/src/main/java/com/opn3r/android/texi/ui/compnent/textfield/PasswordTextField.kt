@@ -3,8 +3,17 @@ package com.opn3r.android.texi.ui.compnent.textfield
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -63,9 +72,16 @@ fun PasswordTextField(
         label = ""
     )
 
-    val visible by remember { mutableStateOf(error) }
+    val errorWidth by animateFloatAsState(
+        targetValue = if (error) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 300,
+            easing = FastOutSlowInEasing
+        )
+    )
 
     var isHide by remember { mutableStateOf(true) }
+
     Box {
         Box(
             modifier = modifier
@@ -145,20 +161,13 @@ fun PasswordTextField(
                 }
             }
         }
-        AnimatedVisibility(
-            visible = visible,
+        Box(
             modifier = modifier
+                .fillMaxWidth(errorWidth)
+                .height(2.dp)
+                .background(color = colorResource(R.color.error_red))
                 .align(alignment = Alignment.BottomCenter)
-        ) {
-            if (error) {
-                Spacer(
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .height(2.dp)
-                        .background(color = colorResource(R.color.error_red))
-                )
-            }
-        }
+        )
     }
 }
 
@@ -166,16 +175,13 @@ fun PasswordTextField(
 @Preview
 fun PasswordTextFieldPreview() {
     val test = remember { mutableStateOf("") }
-    val visibleText = true
     PasswordTextField(
         value = test.value,
         onValueChange = { test.value = it },
         hint = "굿굿",
         onClick = {
-            visibleText != visibleText
-            Log.d("test", "PasswordTextFieldPreview: $visibleText")
         },
         readOnly = false,
-        error = visibleText
+        error = true
     )
 }

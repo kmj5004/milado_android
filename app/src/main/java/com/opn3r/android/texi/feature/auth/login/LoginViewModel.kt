@@ -11,7 +11,8 @@ data class LoginValue(
     val id: String = "",
     val password: String = "",
     val autoLogin: Boolean = false,
-    val saveId: Boolean = false
+    val saveId: Boolean = false,
+    val error: Boolean = false
 )
 
 class LoginViewModel: ViewModel() {
@@ -32,5 +33,9 @@ class LoginViewModel: ViewModel() {
 
     fun updateSaveId(saveId: Boolean) {
         _uiState.update { it.copy(saveId = saveId) }
+    }
+
+    fun updateError(error: Boolean) {
+        _uiState.update { it.copy(error = error) }
     }
 }

@@ -1,8 +1,14 @@
 package com.opn3r.android.texi.ui.compnent.textfield
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -54,6 +60,15 @@ fun DeleteTextField(
         ),
         label = ""
     )
+
+    val errorWidth by animateFloatAsState(
+        targetValue = if (error) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 300,
+            easing = FastOutSlowInEasing
+        )
+    )
+
     Box {
         Box(
             modifier = modifier
@@ -137,16 +152,15 @@ fun DeleteTextField(
                 }
             }
         }
-        if (error) {
-            Spacer(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(2.dp)
-                    .background(color = colorResource(R.color.error_red))
-                    .align(alignment = Alignment.BottomCenter)
-            )
-        }
+        Box(
+            modifier = modifier
+                .fillMaxWidth(errorWidth)
+                .height(2.dp)
+                .background(color = colorResource(R.color.error_red))
+                .align(alignment = Alignment.BottomCenter)
+        )
     }
+
 }
 
 @Composable
