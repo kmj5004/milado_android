@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import notoSanskr
+import com.opn3r.android.texi.feature.font.notSanskrit
 
 @Composable
 fun BasicButton(
@@ -45,7 +45,7 @@ fun BasicButton(
                 text = text,
                 style = TextStyle(
                     fontSize = 15.sp,
-                    fontFamily = notoSanskr,
+                    fontFamily = notSanskrit,
                     fontWeight = FontWeight(500),
                     color = Color(0xFFFFFFFF),
                 )

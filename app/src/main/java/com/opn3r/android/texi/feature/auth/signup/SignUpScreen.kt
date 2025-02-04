@@ -1,11 +1,13 @@
 package com.opn3r.android.texi.feature.auth.signup
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +18,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -50,7 +51,7 @@ import com.opn3r.android.texi.ui.compnent.textfield.CodeTextField
 import com.opn3r.android.texi.ui.compnent.textfield.DeleteTextField
 import com.opn3r.android.texi.ui.compnent.textfield.PasswordTextField
 import kotlinx.coroutines.delay
-import notoSanskr
+import com.opn3r.android.texi.feature.font.notSanskrit
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
@@ -90,24 +91,29 @@ fun SignUpScreen(
         modifier = modifier
             .fillMaxSize()
             .background(color = Color.White)
-            .padding(horizontal = 20.dp)
+            .padding(horizontal = 30.dp)
             .padding(top = 30.dp)
     ) {
+
         Column {
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Image(
-                    painter = painterResource(R.drawable.back),
+                    painter = painterResource(R.drawable.back_icon),
                     contentDescription = null,
                     modifier = modifier
-                        .size(30.dp)
+                        .size(20.dp)
+                        .clickable {
+                            navController.popBackStack()
+                        }
                 )
-                Spacer(Modifier.width(10.dp))
                 Text(
                     text = "회원가입",
                     style = TextStyle(
                         fontSize = 20.sp,
                         lineHeight = 90.sp,
-                        fontFamily = notoSanskr,
+                        fontFamily = notSanskrit,
                         fontWeight = FontWeight.Normal,
                         color = Color(0xFF191919),
                         letterSpacing = 0.25.sp,
@@ -119,105 +125,74 @@ fun SignUpScreen(
                 Text(
                     text = "함께타는\n택시의\n첫걸음",
                     style = TextStyle(
-                        fontSize = 30.sp,
-                        fontFamily = notoSanskr,
+                        fontSize = 25.sp,
+                        fontFamily = notSanskrit,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF000000)
                     )
                 )
                 Spacer(Modifier.height(20.dp))
                 Column {
-                    AnimatedVisibility(
-                        visible = readOnly >= 4,
-                        enter = slideInVertically(
-                            initialOffsetY = { fullHeight -> -fullHeight },
-                            animationSpec = tween(
-                                durationMillis = 500,        // 지속시간
-                                delayMillis = 100,          // 시작 전 대기시간
-                                easing = LinearOutSlowInEasing  // 가속도 곡선
-                            )
-                        ),
-                    ) {
-                        PasswordTextField(
-                            value = uiState.password,
-                            onValueChange = { newValue -> viewModel.updatePassword(newValue) },
-                            hint = "비밀번호를 입력해 주세요",
-                            onClick = {
-                                viewModel.updatePassword("")
-                            },
-                            readOnly = readOnly >= 5,
-                            modifier = modifier.zIndex(1F)
-                        )
-                    }
+
+                    PasswordTextField(
+                        value = uiState.password,
+                        onValueChange = { newValue -> viewModel.updatePassword(newValue) },
+                        hint = "비밀번호를 입력해 주세요",
+                        onClick = {
+                            viewModel.updatePassword("")
+                        },
+                        readOnly = readOnly >= 5,
+                        modifier = modifier
+                            .zIndex(1F)
+                            .animateContentSize()
+                            .height(if (readOnly >= 4) 50.dp else 0.dp)
+                    )
                     Spacer(Modifier.height(10.dp))
-                    AnimatedVisibility(
-                        visible = readOnly >= 3,
-                        enter = slideInVertically(
-                            initialOffsetY = { fullHeight -> -fullHeight },
-                            animationSpec = tween(
-                                durationMillis = 500,        // 지속시간
-                                delayMillis = 100,          // 시작 전 대기시간
-                                easing = LinearOutSlowInEasing  // 가속도 곡선
-                            )
-                        ),
-                    ) {
-                        DeleteTextField(
-                            value = uiState.id,
-                            onValueChange = { newValue -> viewModel.updateId(newValue) },
-                            hint = "아이디를 입력해 주세요",
-                            onClick = {
-                                viewModel.updateId("")
-                            },
-                            readOnly = readOnly >= 4,
-                            modifier = modifier.zIndex(1F)
-                        )
-                    }
+
+                    DeleteTextField(
+                        value = uiState.id,
+                        onValueChange = { newValue -> viewModel.updateId(newValue) },
+                        hint = "아이디를 입력해 주세요",
+                        onClick = {
+                            viewModel.updateId("")
+                        },
+                        readOnly = readOnly >= 4,
+                        modifier = modifier
+                            .zIndex(1F)
+                            .animateContentSize()
+                            .height(if (readOnly >= 3) 50.dp else 0.dp)
+                    )
+
                     Spacer(Modifier.height(10.dp))
-                    AnimatedVisibility(
-                        visible = readOnly >= 2,
-                        enter = slideInVertically(
-                            initialOffsetY = { fullHeight -> -fullHeight },
-                            animationSpec = tween(
-                                durationMillis = 500,        // 지속시간
-                                delayMillis = 100,          // 시작 전 대기시간
-                                easing = LinearOutSlowInEasing  // 가속도 곡선
-                            )
-                        ),
-                    ) {
-                        DeleteTextField(
-                            value = uiState.dep,
-                            onValueChange = { newValue -> viewModel.updateDep(newValue) },
-                            hint = "학번을 입력해 주세요",
-                            onClick = {
-                                viewModel.updateDep("")
-                            },
-                            readOnly = readOnly >= 3,
-                            modifier = modifier.zIndex(1F)
-                        )
-                    }
+                    DeleteTextField(
+                        value = uiState.dep,
+                        onValueChange = { newValue -> viewModel.updateDep(newValue) },
+                        hint = "학번을 입력해 주세요",
+                        onClick = {
+                            viewModel.updateDep("")
+                        },
+                        readOnly = readOnly >= 3,
+                        modifier = modifier
+                            .zIndex(1F)
+                            .animateContentSize()
+                            .height(if (readOnly >= 2) 50.dp else 0.dp)
+                    )
                     Spacer(Modifier.height(10.dp))
-                    AnimatedVisibility(
-                        visible = readOnly >= 1,
-                        enter = slideInVertically(
-                            initialOffsetY = { fullHeight -> -fullHeight },
-                            animationSpec = tween(
-                                durationMillis = 500,        // 지속시간
-                                delayMillis = 100,          // 시작 전 대기시간
-                                easing = LinearOutSlowInEasing  // 가속도 곡선
-                            )
-                        ),
-                    ) {
-                        DeleteTextField(
-                            value = uiState.name,
-                            onValueChange = { newValue -> viewModel.updateName(newValue) },
-                            hint = "이름를 입력해 주세요",
-                            onClick = {
-                                viewModel.updateName("")
-                            },
-                            readOnly = readOnly >= 2,
-                            modifier = modifier.zIndex(1F)
-                        )
-                    }
+
+                    DeleteTextField(
+                        value = uiState.name,
+                        onValueChange = { newValue -> viewModel.updateName(newValue) },
+                        hint = "이름를 입력해 주세요",
+                        onClick = {
+                            viewModel.updateName("")
+                        },
+                        readOnly = readOnly >= 2,
+                        modifier = modifier
+                            .zIndex(1F)
+                            .animateContentSize()
+                            .height(if (readOnly >= 1) 50.dp else 0.dp)
+                    )
+
                     Spacer(Modifier.height(10.dp))
                     AuthTextField(
                         value = uiState.tel,
@@ -389,7 +364,6 @@ fun SignUpScreen(
                         }
                     }
                 }
-
             }
         }
         BasicButton(

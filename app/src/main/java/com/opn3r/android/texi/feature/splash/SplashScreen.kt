@@ -23,8 +23,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,9 +34,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -50,12 +45,9 @@ import kotlinx.coroutines.delay
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.colorResource
-import notoSanskr
-import kotlin.math.round
+import com.opn3r.android.texi.feature.font.notSanskrit
 
 @Composable
 fun SplashScreen(
@@ -88,9 +80,9 @@ fun SplashScreen(
                 enter = slideInHorizontally(
                     initialOffsetX = { fullWidth -> -fullWidth },
                     animationSpec = tween(
-                        durationMillis = 500,        // 지속시간
-                        delayMillis = 50,          // 시작 전 대기시간
-                        easing = LinearOutSlowInEasing  // 가속도 곡선
+                        durationMillis = 500,
+                        delayMillis = 50,
+                        easing = LinearOutSlowInEasing
                     ),
                 ),
                 exit = slideOutVertically(
@@ -101,7 +93,7 @@ fun SplashScreen(
                     text = "같이 택시 탈 \n사람을 찾는다면\n완벽한 선택",
                     style = TextStyle(
                         fontSize = 30.sp,
-                        fontFamily = notoSanskr,
+                        fontFamily = notSanskrit,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFFFFFFF),
                         letterSpacing = 0.25.sp,
@@ -115,9 +107,9 @@ fun SplashScreen(
                 enter = slideInVertically(
                     initialOffsetY = { fullHeight -> -fullHeight},
                     animationSpec = tween(
-                        durationMillis = 500,        // 지속시간
-                        delayMillis = 400,          // 시작 전 대기시간
-                        easing = LinearOutSlowInEasing  // 가속도 곡선
+                        durationMillis = 500,
+                        delayMillis = 400,
+                        easing = LinearOutSlowInEasing
                     ),
                 )
             ) {
@@ -125,7 +117,7 @@ fun SplashScreen(
                     text = "MILADO",
                     style = TextStyle(
                         fontSize = 35.sp,
-                        fontFamily = notoSanskr,
+                        fontFamily = notSanskrit,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
                         letterSpacing = 0.25.sp,
@@ -140,9 +132,9 @@ fun SplashScreen(
             enter = slideInVertically(
                 initialOffsetY = { fullFIllHeight -> fullFIllHeight},
                 animationSpec = tween(
-                    durationMillis = 500,        // 지속시간
-                    delayMillis = 100,          // 시작 전 대기시간
-                    easing = LinearOutSlowInEasing  // 가속도 곡선
+                    durationMillis = 500,
+                    delayMillis = 100,
+                    easing = LinearOutSlowInEasing
                 )
             )
         ) {
@@ -192,7 +184,7 @@ fun StartScreen(
                 text = "같이 택시 탈 \n사람을 찾는다면\n완벽한 선택",
                 style = TextStyle(
                     fontSize = 30.sp,
-                    fontFamily = notoSanskr,
+                    fontFamily = notSanskrit,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFFFFFFF),
                     letterSpacing = 0.25.sp,
@@ -209,7 +201,7 @@ fun StartScreen(
                 Text(
                     text = "사람들을 모아보세요",
                     color = Color.White,
-                    fontFamily = notoSanskr,
+                    fontFamily = notSanskrit,
                     fontWeight = FontWeight.Normal,
                     fontSize = 15.sp
                 )
@@ -268,10 +260,10 @@ fun StartScreen(
 //}
 
 
-//@Composable
-//@Preview
-//fun SplashPreview() {
-//    SplashScreen(
-//        navController = NavHostController(context = LocalContext.current)
-//    )
-//}
+@Composable
+@Preview
+fun SplashPreview() {
+    SplashScreen(
+        navController = NavHostController(context = LocalContext.current)
+    )
+}

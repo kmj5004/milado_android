@@ -1,9 +1,7 @@
 package com.opn3r.android.texi.feature.auth.login
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
@@ -35,7 +33,7 @@ class LoginViewModel: ViewModel() {
         _uiState.update { it.copy(saveId = saveId) }
     }
 
-    fun updateError(error: Boolean) {
-        _uiState.update { it.copy(error = error) }
-    }
+//    fun updateError(error: Boolean) {
+//        _uiState.update { it.copy(error = error) }
+//    }
 }

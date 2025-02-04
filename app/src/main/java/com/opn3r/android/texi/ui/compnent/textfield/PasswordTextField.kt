@@ -1,26 +1,15 @@
 package com.opn3r.android.texi.ui.compnent.textfield
 
-import android.util.Log
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -46,11 +35,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import notoSanskr
+import com.opn3r.android.texi.feature.font.notSanskrit
 import com.opn3r.android.texi.R
 
 @Composable
@@ -77,7 +65,7 @@ fun PasswordTextField(
         animationSpec = tween(
             durationMillis = 300,
             easing = FastOutSlowInEasing
-        )
+        ), label = ""
     )
 
     var isHide by remember { mutableStateOf(true) }
@@ -118,10 +106,10 @@ fun PasswordTextField(
                         ) {
                             if (value.isEmpty()) {
                                 Text(
-                                    fontSize = 15.sp,
+                                    fontSize = 12.sp,
                                     text = hint,
                                     style = TextStyle(
-                                        fontFamily = notoSanskr,
+                                        fontFamily = notSanskrit,
                                         fontWeight = FontWeight.Medium,
                                         color = animatedColor,
                                     ),
@@ -134,7 +122,7 @@ fun PasswordTextField(
                     readOnly = readOnly,
                     textStyle = TextStyle(
                         color = animatedColor
-                    )
+                    ),
                 )
                 if (readOnly) {
                     Image(

@@ -102,7 +102,7 @@ fun CodeTextFieldPreview() {
     val text = remember { mutableStateOf("1") }
     CodeTextField(
         value = text.value,
-        onValueChange = { newText -> text.value },
+        onValueChange = { text.value },
         readOnly = true
     )
 }

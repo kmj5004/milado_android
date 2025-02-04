@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -31,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,15 +41,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.google.accompanist.permissions.*
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.google.accompanist.permissions.rememberPermissionState
 import com.opn3r.android.texi.R
 import com.opn3r.android.texi.feature.navigation.NavGroup
 import com.opn3r.android.texi.ui.compnent.button.BasicButton
 import kotlinx.coroutines.launch
-import notoSanskr
+import com.opn3r.android.texi.feature.font.notSanskrit
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AuthScreen(
     modifier: Modifier = Modifier,
@@ -74,9 +75,9 @@ fun AuthScreen(
 
     val context = LocalContext.current
 
-    var pass by remember { mutableStateOf(false) }
+    val pass by remember { mutableStateOf(false) }
 
-    var snackBar by remember { mutableStateOf(false) }
+    val snackBar by remember { mutableStateOf(false) }
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -101,7 +102,7 @@ fun AuthScreen(
                 style = TextStyle(
                     fontSize = 18.sp,
                     lineHeight = 32.sp,
-                    fontFamily = notoSanskr,
+                    fontFamily = notSanskrit,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF000000),
                     letterSpacing = 0.25.sp,
@@ -112,7 +113,7 @@ fun AuthScreen(
                 text = "접근 권한 요청을 받으면 허용해 주세요",
                 style = TextStyle(
                     fontSize = 13.sp,
-                    fontFamily = notoSanskr,
+                    fontFamily = notSanskrit,
                     fontWeight = FontWeight.Medium,
                     color = Color(0xFF999999),
                     letterSpacing = 0.25.sp,
@@ -142,12 +143,12 @@ fun AuthScreen(
             Log.d("스낵바", "AuthScreen: $snackBar")
             if (snackBar) {
                 coroutineScope.launch {
-                    val snackBar =
+                    val snackBar1 =
                         snackBarHost.showSnackbar(
                             "설정에서 권한을 허용해주세요.",
                             "설정 화면으로 이동"
                         )
-                    when (snackBar) {
+                    when (snackBar1) {
                         SnackbarResult.ActionPerformed -> {
                             val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                 Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
@@ -222,7 +223,7 @@ fun Auth(
                     text = title,
                     style = TextStyle(
                         fontSize = 15.sp,
-                        fontFamily = notoSanskr,
+                        fontFamily = notSanskrit,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFF000000),
                     )
@@ -232,7 +233,7 @@ fun Auth(
                     style = TextStyle(
                         fontSize = 10.sp,
                         lineHeight = 40.sp,
-                        fontFamily = notoSanskr,
+                        fontFamily = notSanskrit,
                         fontWeight = FontWeight.Normal,
                         color = Color(0xFF767676),
                         letterSpacing = 0.25.sp,

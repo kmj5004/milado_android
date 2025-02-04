@@ -79,7 +79,7 @@ class SignUpViewModel : ViewModel() {
 
     fun updateClicked(content: Boolean) {
         _uiState.update { it.copy(clicked = content) }
-        if (content == false) _uiState.update { it.copy(sec = 300) }
+        if (!content) _uiState.update { it.copy(sec = 300) }
     }
 
     fun updateDep(dep: String) {
@@ -102,7 +102,7 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun pasteCode(code: String) {
+    private fun pasteCode(code: String) {
         _uiState.update {
             it.copy(
                 code = code[0].toString(),

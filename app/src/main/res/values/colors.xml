@@ -11,4 +11,7 @@
     <color name="white_yellow">#FFFEE101</color>
     <color name="m_line">#FFD9D9D9</color>
     <color name="error_red">#FFFF3120</color>
+    <color name="text_blue">#FF0099FF</color>
+    <color name="mid_gray_text">#FF767676</color>
+    <color name="low_gray_line">#FFEDEDED</color>
 </resources>

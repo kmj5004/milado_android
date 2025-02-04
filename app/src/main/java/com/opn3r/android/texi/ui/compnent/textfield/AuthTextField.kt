@@ -29,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import notoSanskr
+import com.opn3r.android.texi.feature.font.notSanskrit
 import com.opn3r.android.texi.R
 
 @Composable
@@ -47,7 +47,7 @@ fun AuthTextField(
         animationSpec = tween(
             durationMillis = 200,
             easing = LinearOutSlowInEasing
-        )
+        ), label = ""
     )
     Box(
         modifier = modifier
@@ -73,10 +73,10 @@ fun AuthTextField(
                     ) {
                         if (value.isEmpty()) {
                             Text(
-                                fontSize = 15.sp,
+                                fontSize = 12.sp,
                                 text = hint,
                                 style = TextStyle(
-                                    fontFamily = notoSanskr,
+                                    fontFamily = notSanskrit,
                                     fontWeight = FontWeight.Medium,
                                     color = Color(0x99999999),
                                 ),
@@ -104,7 +104,7 @@ fun AuthTextField(
                     style = TextStyle(
                         fontSize = 15.sp,
                         lineHeight = 40.sp,
-                        fontFamily = notoSanskr,
+                        fontFamily = notSanskrit,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFFFCC01),
                         letterSpacing = 0.25.sp,

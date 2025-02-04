@@ -1,6 +1,5 @@
 package com.opn3r.android.texi
 
-import MyAppTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,9 +12,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navHostController = rememberNavController()
             NavGraph(navHostController)
-            MyAppTheme {
-
-            }
         }
     }
 }
