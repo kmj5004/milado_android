@@ -92,7 +92,7 @@ fun SplashScreen(
                 Text(
                     text = "같이 택시 탈 \n사람을 찾는다면\n완벽한 선택",
                     style = TextStyle(
-                        fontSize = 30.sp,
+                        fontSize = 24.sp,
                         fontFamily = notSanskrit,
                         fontWeight = FontWeight.Bold,
                         color = Color(0xFFFFFFFF),
@@ -183,7 +183,7 @@ fun StartScreen(
             Text(
                 text = "같이 택시 탈 \n사람을 찾는다면\n완벽한 선택",
                 style = TextStyle(
-                    fontSize = 30.sp,
+                    fontSize = 24.sp,
                     fontFamily = notSanskrit,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFFFFFFF),

@@ -43,11 +43,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.opn3r.android.texi.R
+import com.opn3r.android.texi.feature.font.notSanskrit
 import com.opn3r.android.texi.ui.compnent.button.BasicButton
 import com.opn3r.android.texi.ui.compnent.button.CircleButton
 import com.opn3r.android.texi.ui.compnent.textfield.DeleteTextField
 import com.opn3r.android.texi.ui.compnent.textfield.PasswordTextField
-import com.opn3r.android.texi.feature.font.notSanskrit
 
 @Composable
 fun LoginScreen(
@@ -58,18 +58,32 @@ fun LoginScreen(
 
     val uiState by viewModel.uiState.collectAsState()
     val string = buildAnnotatedString {
-        append("계정을 잃으셨나요?")
         withStyle(
             SpanStyle(
-                color = colorResource(R.color.text_blue)
+                fontSize = 12.sp
+            )
+        ) {
+            append("계정을 잃으셨나요?")
+        }
+        withStyle(
+            SpanStyle(
+                color = colorResource(R.color.text_blue),
+                fontSize = 12.sp
             )
         ) {
             append(" ID 찾기 ")
         }
-        append("또는")
         withStyle(
             SpanStyle(
-                color = colorResource(R.color.text_blue)
+                fontSize = 12.sp
+            )
+        ) {
+            append("또는")
+        }
+        withStyle(
+            SpanStyle(
+                color = colorResource(R.color.text_blue),
+                fontSize = 12.sp
             )
         ) {
             append(" 비밀번호 찾기")
@@ -133,7 +147,7 @@ fun LoginScreen(
                 Text(
                     text = "로그인",
                     style = TextStyle(
-                        fontSize = 20.sp,
+                        fontSize = 16.sp,
                         lineHeight = 90.sp,
                         fontFamily = notSanskrit,
                         fontWeight = FontWeight.Normal,

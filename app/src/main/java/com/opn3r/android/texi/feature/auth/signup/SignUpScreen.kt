@@ -111,7 +111,7 @@ fun SignUpScreen(
                 Text(
                     text = "회원가입",
                     style = TextStyle(
-                        fontSize = 20.sp,
+                        fontSize = 16.sp,
                         lineHeight = 90.sp,
                         fontFamily = notSanskrit,
                         fontWeight = FontWeight.Normal,
